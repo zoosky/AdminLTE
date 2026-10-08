@@ -5,6 +5,31 @@ All notable changes to AdminLTE will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.10.1] - 2026-10-08
+
+### Changed
+
+- Refresh build, lint, formatting, and testing dependencies to the latest compatible stable releases, including Astro 7.3.7, Rollup 4.64.2, Playwright 1.64.0, Vitest 5.0.3, Sass 1.105.1, and ESLint 10.12.0. Replace `npm-run-all` with the maintained `npm-run-all2` and declare the previously implicit `unist-util-visit` dependency.
+- Update pinned demo and integration libraries, including FullCalendar 7.1.1, Tabulator 6.6.1, OverlayScrollbars 2.16.0, jsVectorMap 1.7.0, and Tom Select 2.6.2. Migrate FullCalendar's stylesheet, Bootstrap theme, draggable, and event-colour APIs, and refresh existing CDN integrity hashes.
+- Building from source requires Node.js 22.22.3+, 24.16.0+, or 26.3.0+ and npm 10+, declared through `devEngines`; the published package retains its existing Node.js engine requirement. TypeScript remains on 6.0.3 because the latest Astro checker and TypeScript ESLint releases do not yet support TypeScript 7.
+
+### Fixed
+
+- Synchronize every fullscreen control, including when initializing a layout already in fullscreen, without changing public events or component APIs. Scope icon updates to fullscreen controls so they do not interfere with card-maximize buttons.
+- Prevent shared-header overflow at tablet widths, preserve local dates in calendar events, and tolerate an unavailable OverlayScrollbars CDN script.
+- Improve demo filter labels, grid semantics, product-link names, calendar accessible names, and light/dark contrast. Dark-mode outline buttons and documentation links now use theme-aware colour tokens; fixed palette swatches retain a white demonstration background.
+- Check Astro source pages explicitly, fix previously hidden palette typing errors, and repair the ESM Prettier configuration and Unicorn recommended preset.
+
+### Added
+
+- Playwright checks for every built HTML page, responsive light/dark layouts, RTL, and key plugin interactions, with Chromium, Firefox, and WebKit CI jobs.
+- Node.js 22/24/26 unit-test CI, light/dark accessibility CI, and fullscreen regression tests. Missing Playwright now fails accessibility checks rather than silently skipping them.
+- `npm run test-size` enforces all existing gzip budgets locally without an external reporting service; `npm run production` uses this check. Bundlewatch remains available for CI reporting.
+
+### Security
+
+- Refresh security overrides, including a patched PostCSS selector parser. Production dependencies audit clean. Development tooling still includes `braces@3.0.3`, affected by [GHSA-vfj7-8cjw-p6xm](https://github.com/advisories/GHSA-vfj7-8cjw-p6xm); no patched release is available. Its twenty propagated npm audit findings remain unresolved rather than downgrading the current toolchain.
+
 ## [4.10.0] - 2026-10-01
 
 ### Changed
@@ -992,4 +1017,4 @@ This release represents a complete modernization of the AdminLTE codebase, bring
 1. Run `npm install` to get latest dependencies
 2. Use `npm start` for development
 3. Use `npm run production` for production builds
-4. Review any custom ESLint configurations for compatibility 
+4. Review any custom ESLint configurations for compatibility

@@ -15,8 +15,8 @@ const paletteClasses = palette.map(c => `text-bg-${c.name}`)
 // The AdminLTE 3 originals (adminlte-colors-v3.css) are the alternative sheet;
 // the two define the same class names, so the page loads one at a time.
 const paletteSets = [
-  { key: "designed", label: "Designed palette (4.4)", file: "adminlte-colors.css", groups: skinGroups, skins, classes: paletteClasses, text: Object.fromEntries(palette.map(c => [`text-bg-${c.name}`, c.textColor])) },
-  { key: "v3", label: "AdminLTE 3 originals", file: "adminlte-colors-v3.css", groups: skinGroupsV3, skins: skinsV3, classes: paletteV3.map(c => `text-bg-${c.name}`), text: Object.fromEntries(paletteV3.map(c => [`text-bg-${c.name}`, c.textColor])) }
+  { key: "designed" as const, label: "Designed palette (4.4)", file: "adminlte-colors.css", groups: skinGroups, skins, classes: paletteClasses, text: Object.fromEntries(palette.map(c => [`text-bg-${c.name}`, c.textColor])) },
+  { key: "v3" as const, label: "AdminLTE 3 originals", file: "adminlte-colors-v3.css", groups: skinGroupsV3, skins: skinsV3, classes: paletteV3.map(c => `text-bg-${c.name}`), text: Object.fromEntries(paletteV3.map(c => [`text-bg-${c.name}`, c.textColor])) }
 ]
 // `data-lte-primary` values each sheet can offer (#6107)
 const primaryChoices = {

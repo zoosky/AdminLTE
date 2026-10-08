@@ -27,8 +27,8 @@ const names = palette.map(c => c.name)
 // AdminLTE 3 originals. Both sheets define the same class names with different
 // values, so the page loads one at a time and swaps the <link>.
 const paletteSets = [
-  { key: "designed", label: "Designed palette (4.4)", file: "adminlte-colors.css", groups: skinGroups, skins, choices: ["default", ...palette.map(c => c.name)] },
-  { key: "v3", label: "AdminLTE 3 originals", file: "adminlte-colors-v3.css", groups: skinGroupsV3, skins: skinsV3, choices: ["default", ...paletteV3.map(c => c.name)] }
+  { key: "designed" as const, label: "Designed palette (4.4)", file: "adminlte-colors.css", groups: skinGroups, skins, choices: ["default", ...palette.map(c => c.name)] },
+  { key: "v3" as const, label: "AdminLTE 3 originals", file: "adminlte-colors-v3.css", groups: skinGroupsV3, skins: skinsV3, choices: ["default", ...paletteV3.map(c => c.name)] }
 ]
 // name → automatic text colour, per set and per contrast mode. v3 uses the YIQ
 // rule (some colours take dark text); `data-lte-contrast="aa"` flips the ones
@@ -53,9 +53,9 @@ const utilityRows = [
   { label: ".text-bg-*", cell: (n: string) => `<div class="lte-swatch text-bg-${n}">Aa</div>` },
   { label: ".bg-* .bg-opacity-25", cell: (n: string) => `<div class="lte-swatch bg-${n} bg-opacity-25"></div>` },
   { label: ".bg-gradient-*", cell: (n: string) => `<div class="lte-swatch bg-gradient-${n}"></div>` },
-  { label: ".text-*", cell: (n: string) => `<div class="lte-swatch fw-semibold text-${n}">Aa</div>` },
+  { label: ".text-*", cell: (n: string) => `<div class="lte-swatch bg-white fw-semibold text-${n}">Aa</div>` },
   { label: ".border-*", cell: (n: string) => `<div class="lte-swatch border border-3 border-${n}"></div>` },
-  { label: ".link-*", cell: (n: string) => `<div class="lte-swatch"><a href="#" class="link-${n} link-underline-opacity-25 link-underline-opacity-100-hover">Link</a></div>` },
+  { label: ".link-*", cell: (n: string) => `<div class="lte-swatch bg-white"><a href="#" class="link-${n} link-underline-opacity-25 link-underline-opacity-100-hover">Link</a></div>` },
   { label: ".callout-*", cell: (n: string) => `<div class="callout callout-${n} py-2 px-2 mb-0 small text-center rounded-1">Subtle</div>` }
 ]
 const smallBoxNumbers = ["2,341", "$18.4k", "318", "97%"]
@@ -523,7 +523,7 @@ const smallBoxIcons = ["bi-people", "bi-cash-stack", "bi-chat-dots", "bi-check-l
                 <p>
                   Every family Bootstrap generates for its theme colours, generated
                   for the palette — the same CSS-variable shape, so
-                  <code>.bg-opacity-*</code>, <code>.link-underline-*</code> and friends compose.
+                  <code>.bg-opacity-*</code>, <code>.link-underline-*</code> and friends compose. The raw text and link swatches use a white background to demonstrate fixed palette colours in either theme.
                 </p>
                 <div class="table-responsive">
                   <table class="table table-sm align-middle mb-0" style="min-width: 60rem;">
@@ -612,7 +612,7 @@ const smallBoxIcons = ["bi-people", "bi-cash-stack", "bi-chat-dots", "bi-check-l
                   <button type="button" class="btn text-bg-indigo">Save</button>
                   <button type="button" class="btn bg-gradient-pink">Delete</button>
                   <button type="button" class="btn text-bg-teal">Approve</button>
-                  <button type="button" class="btn btn-outline-secondary border-slate text-slate">Outline via utilities</button>
+                  <button type="button" class="btn btn-outline-secondary bg-white border-slate text-slate">Outline via utilities</button>
                 </div>
                 <div class="d-grid gap-2">
                   {

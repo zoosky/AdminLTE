@@ -90,17 +90,21 @@ or copy one of the demo pages.
 
 ### Developing AdminLTE itself
 
-1. **Install dependencies:** `npm install`
+1. **Install dependencies:** use Node.js 22.22.3+, 24.16.0+, or 26.3.0+ and npm 10+, then run `npm ci`
 2. **Start the dev server:** `npm start` *(opens http://localhost:3000 with live reload)*
-3. **Build:** `npm run build` — or `npm run production` for the full lint + optimize + bundlewatch pipeline
+3. **Build:** `npm run build` — or `npm run production` for the full lint + test + optimize + bundle-size pipeline
 
 <details>
 <summary>All npm scripts</summary>
 
 - `npm start` — development server with file watching
 - `npm run build` — build all assets for development
-- `npm run production` — full production build with linting and bundlewatch
+- `npm run production` — full production build with linting, unit tests, and local bundle-size budgets
 - `npm run lint` — run all linters (JS, CSS, docs, lockfile)
+- `npm test` — unit tests (Vitest)
+- `npm run test-browser` — built-page, responsive, theme, and plugin checks (install Chromium with `npx playwright install chromium`)
+- `npm run test-a11y` — axe accessibility checks on built pages (also test dark mode with `A11Y_COLOR_SCHEME=dark`)
+- `npm run test-size` — check gzip budgets without external reporting services
 - `npm run css` — build CSS only
 - `npm run js` — build JavaScript only
 

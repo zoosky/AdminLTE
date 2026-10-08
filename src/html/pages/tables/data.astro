@@ -17,7 +17,7 @@ const page = "data";
     <Head title={title} path={path} />
     <link
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/tabulator-tables@6.4.0/dist/css/tabulator_bootstrap5.min.css"
+      href="https://cdn.jsdelivr.net/npm/tabulator-tables@6.6.1/dist/css/tabulator_bootstrap5.min.css"
       crossorigin="anonymous"
     />
   </head>
@@ -91,9 +91,10 @@ const page = "data";
                     Print
                   </button>
                 </div>
-                <div id="users-table"></div>
+                <div id="users-table" aria-label="Users"></div>
+                <div id="table-pagination" class="d-flex flex-wrap gap-2 justify-content-end mt-2"></div>
               </div>
-              <div class="card-footer text-secondary small">
+              <div class="card-footer bg-body text-body-secondary small">
                 Powered by
                 <a
                   href="https://tabulator.info/"
@@ -110,7 +111,7 @@ const page = "data";
     </div>
     <Scripts path={path} />
     <script
-      src="https://cdn.jsdelivr.net/npm/tabulator-tables@6.4.0/dist/js/tabulator.min.js"
+      src="https://cdn.jsdelivr.net/npm/tabulator-tables@6.6.1/dist/js/tabulator.min.js"
       crossorigin="anonymous"></script>
     <script is:inline>
       const statusBadge = (cell) => {
@@ -143,18 +144,19 @@ const page = "data";
           data: data,
           layout: "fitColumns",
           pagination: true,
+          paginationElement: document.getElementById("table-pagination"),
           paginationSize: 10,
           paginationSizeSelector: [10, 25, 50, 100],
           movableColumns: true,
           columns: [
             { title: "#", field: "id", width: 60, headerSort: true },
-            { title: "Name", field: "name", headerFilter: "input" },
-            { title: "Email", field: "email", headerFilter: "input" },
+            { title: "Name", field: "name", headerFilter: "input", headerFilterParams: { elementAttributes: { "aria-label": "Filter by name" } } },
+            { title: "Email", field: "email", headerFilter: "input", headerFilterParams: { elementAttributes: { "aria-label": "Filter by email" } } },
             {
               title: "Role",
               field: "role",
               headerFilter: "list",
-              headerFilterParams: { values: ["", "Admin", "Editor", "Viewer"] },
+              headerFilterParams: { values: ["", "Admin", "Editor", "Viewer"], elementAttributes: { "aria-label": "Filter by role" } },
               width: 120
             },
             {
@@ -162,12 +164,27 @@ const page = "data";
               field: "status",
               formatter: statusBadge,
               headerFilter: "list",
-              headerFilterParams: { values: ["", "Active", "Invited", "Suspended"] },
+              headerFilterParams: { values: ["", "Active", "Invited", "Suspended"], elementAttributes: { "aria-label": "Filter by status" } },
               width: 130,
               hozAlign: "center"
             },
             { title: "Joined", field: "joined", sorter: "date", width: 130 }
           ]
+        });
+
+        table.on("tableBuilt", () => {
+          // Keep the scroll region keyboard reachable inside a valid grid.
+          // Pagination lives outside the grid so its buttons are not grid rows.
+          const grid = document.getElementById("users-table");
+          grid.removeAttribute("aria-owns");
+          grid.querySelector(".tabulator-tableholder").setAttribute("role", "rowgroup");
+          grid.querySelector(".tabulator-table").setAttribute("role", "presentation");
+        });
+
+        table.on("renderComplete", () => {
+          document.querySelectorAll("#table-pagination button").forEach(button => {
+            button.classList.add("btn", "btn-sm", "btn-outline-secondary");
+          });
         });
 
         document.getElementById("table-filter").addEventListener("input", (e) => {
